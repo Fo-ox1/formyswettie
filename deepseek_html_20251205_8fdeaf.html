@@ -1,0 +1,1246 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Для тебя — Жаннелия</title>
+<style>
+  :root{
+    --bg:#07061a;
+    --card:#0f1630cc;
+    --accent:#ffd6ea;
+    --soft:#f7f7fb;
+    --glass: rgba(255,255,255,0.04);
+    --gradient-1: linear-gradient(135deg, #ffd6ea 0%, #ffecf6 25%, #fff2f8 50%, #ffecf6 75%, #ffd6ea 100%);
+    --gradient-2: linear-gradient(45deg, rgba(255,214,234,0.1) 0%, rgba(255,236,246,0.05) 50%, rgba(255,242,248,0.1) 100%);
+    --gradient-3: radial-gradient(circle at 30% 20%, rgba(255,214,234,0.15) 0%, transparent 50%);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    margin:0; font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif; 
+    background: 
+      radial-gradient(ellipse at 20% 10%, rgba(255,240,255,0.03), transparent 30%),
+      radial-gradient(ellipse at 80% 90%, rgba(255,214,234,0.02), transparent 25%),
+      linear-gradient(180deg,#050417 0%, #08102a 100%),
+      var(--bg);
+    color:var(--soft); -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  /* Enhanced stars background */
+  .sky{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.1) 0 1px, transparent 1px),
+      radial-gradient(circle at 60% 30%, rgba(255,255,255,0.07) 0 1px, transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05) 0 1px, transparent 1px),
+      radial-gradient(circle at 40% 50%, rgba(255,255,255,0.04) 0 1px, transparent 1px),
+      radial-gradient(circle at 10% 80%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
+      radial-gradient(circle at 90% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px);
+    background-size: 1200px 800px, 900px 600px, 700px 500px, 1100px 700px, 800px 600px, 1300px 900px;
+    animation: twinkle 10s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.02));
+  }
+  
+  .sky::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,214,234,0.02) 0%, transparent 70%);
+    z-index: -1;
+  }
+  
+  @keyframes twinkle{
+    0%, 100% {opacity:0.7; transform: translateY(0);}
+    50% {opacity:1; transform: translateY(-5px);}
+  }
+
+  .container{
+    position:relative; 
+    z-index:2; 
+    max-width:1200px; 
+    margin:40px auto; 
+    padding:28px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  header{
+    display:flex;
+    align-items:center;
+    flex-direction:column; 
+    gap:18px; 
+    margin-bottom:26px;
+  }
+  
+  h1{
+    font-size:clamp(24px, 5vw, 36px); 
+    margin:0; 
+    color:#fff; 
+    text-shadow:0 6px 24px rgba(0,0,0,0.6);
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+  }
+  
+  .subtitle{
+    color:rgba(255,255,255,0.85); 
+    font-size:clamp(14px, 2.5vw, 18px);
+    text-align: center;
+    max-width: 800px;
+    line-height: 1.5;
+  }
+
+  /* Star centerpiece */
+  .main-star-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center; 
+    margin:18px 0 30px; 
+    position:relative;
+  }
+  
+  .star{
+    width:clamp(140px, 20vw, 220px); 
+    height:clamp(140px, 20vw, 220px); 
+    border-radius:50%; 
+    background: radial-gradient(circle at 30% 30%, #fff 0 6%, #ffe7f0 6% 22%, #ffd6ea 22% 60%, transparent 60%);
+    display:flex;
+    align-items:center;
+    justify-content:center; 
+    box-shadow: 
+      0 8px 40px rgba(255,182,210,0.12), 
+      inset 0 2px 8px rgba(255,255,255,0.12),
+      0 0 60px rgba(255,182,210,0.08);
+    transform:scale(1); 
+    transition:transform .6s cubic-bezier(.2,.9,.2,1), box-shadow .6s, filter .6s;
+    cursor:pointer;
+    animation: float 6s ease-in-out infinite;
+    filter: brightness(1);
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
+  }
+  
+  .star:hover {
+    transform: scale(1.05);
+    box-shadow: 
+      0 12px 80px rgba(255,182,210,0.25), 
+      inset 0 2px 12px rgba(255,255,255,0.15),
+      0 0 80px rgba(255,182,210,0.15);
+  }
+  
+  .star[data-active="true"]{ 
+    transform:scale(1.08); 
+    box-shadow:
+      0 12px 80px rgba(255,182,210,0.3),
+      0 0 100px rgba(255,182,210,0.2);
+    animation: pulse 2s infinite;
+    filter: brightness(1.1);
+  }
+  
+  @keyframes pulse{
+    0%{transform:scale(1.06) rotate(0deg); box-shadow: 0 12px 80px rgba(255,182,210,0.25);}
+    50%{transform:scale(1.1) rotate(2deg); box-shadow: 0 20px 100px rgba(255,182,210,0.35);}
+    100%{transform:scale(1.06) rotate(0deg); box-shadow: 0 12px 80px rgba(255,182,210,0.25);}
+  }
+
+  .star-label{
+    position:absolute; 
+    top:56%; 
+    transform:translateY(-10%); 
+    text-align:center; 
+    font-weight:600; 
+    color:#fff; 
+    text-shadow:0 6px 20px rgba(0,0,0,0.6);
+    font-size: clamp(16px, 2.5vw, 20px);
+  }
+
+  /* Constellation heart using svg overlay */
+  .constellation{
+    position:absolute; 
+    inset:0; 
+    pointer-events:none; 
+    z-index:1; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center;
+  }
+
+  /* Intro card */
+  .intro-card{
+    background: var(--gradient-2);
+    border-radius:20px; 
+    padding:28px; 
+    box-shadow:
+      0 8px 30px rgba(2,6,23,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    margin-bottom:28px;
+    transition:transform .5s ease, opacity .45s ease;
+    border: 1px solid rgba(255,255,255,0.03);
+    width: 100%;
+    max-width: 900px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .intro-card p{
+    margin:8px 0 0; 
+    font-size:clamp(14px, 2vw, 16px); 
+    color:rgba(255,255,255,0.9);
+    line-height: 1.6;
+  }
+
+  /* Sections grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(350px, 1fr));
+    gap:24px; 
+    margin-top:10px;
+  }
+  
+  @media(max-width:780px){
+    .grid{
+      grid-template-columns:1fr;
+      gap:20px;
+    }
+  }
+
+  .card{
+    background: var(--gradient-2);
+    border-radius:18px; 
+    padding:24px; 
+    position:relative; 
+    overflow:hidden;
+    transition: transform .5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow .5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity .5s ease;
+    box-shadow:
+      0 6px 28px rgba(5,8,20,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.03);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .card:hover{ 
+    transform:translateY(-8px) scale(1.01); 
+    box-shadow:
+      0 20px 50px rgba(5,8,20,0.8),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .card h3{
+    margin:0 0 12px;
+    font-size:clamp(18px, 2.5vw, 22px);
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  
+  .card p{
+    margin:0;
+    color:rgba(255,255,255,0.85);
+    line-height: 1.5;
+    font-size: clamp(14px, 1.8vw, 16px);
+  }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex; 
+    align-items:center; 
+    justify-content: center;
+    gap:8px; 
+    padding:12px 18px; 
+    border-radius:14px; 
+    background:var(--gradient-1); 
+    color:#2b1020; 
+    font-weight:700; 
+    cursor:pointer; 
+    border:none; 
+    box-shadow:
+      0 6px 20px rgba(255,174,204,0.15),
+      0 2px 4px rgba(0,0,0,0.1);
+    transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+    font-size: clamp(14px, 1.8vw, 16px);
+    min-width: 140px;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+      0 10px 30px rgba(255,174,204,0.25),
+      0 4px 8px rgba(0,0,0,0.15);
+    filter: brightness(1.1);
+  }
+  
+  .btn:active {
+    transform: translateY(-1px);
+  }
+  
+  .ghost{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.08); 
+    color:var(--soft); 
+    padding:10px 16px; 
+    border-radius:12px; 
+    cursor:pointer;
+    transition: all .3s ease;
+    font-size: clamp(13px, 1.8vw, 15px);
+  }
+  
+  .ghost:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Letter modal - IMPROVED */
+  .modal{
+    position:fixed; 
+    inset:0; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    background:rgba(0,0,0,0.85);
+    backdrop-filter: blur(15px);
+    z-index:50; 
+    padding:20px; 
+    opacity:0; 
+    pointer-events:none; 
+    transition:opacity .4s ease;
+  }
+  
+  .modal.open{
+    opacity:1; 
+    pointer-events:auto;
+  }
+  
+  .letter{
+    width:100%; 
+    max-width:700px; 
+    background: linear-gradient(145deg, rgba(20, 15, 40, 0.95), rgba(15, 10, 30, 0.98));
+    border-radius:24px; 
+    padding:40px 32px 32px; 
+    box-shadow:
+      0 25px 80px rgba(0,0,0,0.9),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    transform: translateY(30px) scale(0.95);
+    transition: transform .4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .modal.open .letter {
+    transform: translateY(0) scale(1);
+  }
+  
+  .letter h2{
+    margin:0 0 24px; 
+    font-size:32px;
+    color: #fff;
+    text-align: center;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255,214,234,0.2);
+  }
+  
+  .letter p{
+    white-space:pre-line; 
+    line-height:1.7; 
+    color:rgba(255,255,255,0.95);
+    font-size: 18px;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .close{
+    position:absolute; 
+    right:20px; 
+    top:20px; 
+    background:rgba(255,255,255,0.1); 
+    color:#fff; 
+    border:0; 
+    font-size:24px; 
+    cursor:pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  
+  .close:hover {
+    background: rgba(255,255,255,0.2);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  }
+
+  /* Flower - redesigned */
+  .flower-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  
+  .flower-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .flower-svg{
+    width: 100%;
+    height: 100%;
+    transition: transform .5s ease, filter .5s ease;
+    transform-origin: center;
+  }
+  
+  .flower-petal{
+    transition: all .8s cubic-bezier(.2,.9,.2,1);
+    transform-origin: 50% 100%;
+    opacity: 0.3;
+    filter: blur(2px);
+  }
+  
+  .flower-center {
+    transition: all .8s ease;
+  }
+  
+  .flower-stage-1 .flower-petal {
+    transform: scale(0.5) translateY(40px);
+    opacity: 0.2;
+    filter: blur(3px) brightness(0.7);
+  }
+  
+  .flower-stage-2 .flower-petal {
+    transform: scale(0.85) translateY(15px);
+    opacity: 0.6;
+    filter: blur(1px) brightness(0.9);
+  }
+  
+  .flower-stage-3 .flower-petal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    filter: blur(0) brightness(1.2);
+  }
+  
+  .flower-stage-1 .flower-center {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  
+  .flower-stage-2 .flower-center {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  
+  .flower-stage-3 .flower-center {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Micro-messages - redesigned */
+  .micro{
+    display:flex;
+    flex-direction:column;
+    gap:16px; 
+    align-items:center;
+  }
+  
+  .micro .box{
+    background: var(--gradient-2);
+    padding:24px; 
+    border-radius:18px; 
+    width:100%;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 
+      inset 0 2px 12px rgba(255,255,255,0.04),
+      0 6px 30px rgba(0,0,0,0.3);
+    transition: all .5s ease;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.6;
+  }
+  
+  .micro .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      inset 0 2px 15px rgba(255,255,255,0.06),
+      0 10px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Star constellation section - IMPROVED */
+  .star-constellation {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .main-star-constellation {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 2;
+    animation: starPulse 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 15px rgba(255,214,234,0.5));
+  }
+  
+  @keyframes starPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.9; }
+  }
+  
+  .small-star {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    transition: all .4s ease;
+    filter: drop-shadow(0 0 8px rgba(255,214,234,0.4));
+    z-index: 1;
+  }
+  
+  .small-star:hover {
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 15px rgba(255,214,234,0.7));
+  }
+  
+  .star-pos-1 { top: 10%; left: 20%; }
+  .star-pos-2 { top: 5%; right: 25%; }
+  .star-pos-3 { top: 35%; left: 10%; }
+  .star-pos-4 { top: 30%; right: 15%; }
+  .star-pos-5 { bottom: 25%; left: 20%; }
+  .star-pos-6 { bottom: 20%; right: 25%; }
+  .star-pos-7 { bottom: 5%; left: 45%; }
+
+  /* Heart game - redesigned with proper heart shape */
+  .big-heart{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    padding:32px;
+  }
+  
+  .heart-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heart{
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+    transition: all .4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: grayscale(1) brightness(0.5) drop-shadow(0 0 10px rgba(255,214,234,0.2));
+    transform: scale(1);
+  }
+  
+  .heart[data-level="1"]{
+    filter: grayscale(0.7) brightness(0.7) drop-shadow(0 0 15px rgba(255,200,220,0.4));
+  }
+  
+  .heart[data-level="2"]{
+    filter: grayscale(0.4) brightness(0.85) drop-shadow(0 0 25px rgba(255,180,210,0.6));
+  }
+  
+  .heart[data-level="3"]{
+    filter: grayscale(0) brightness(1.1) drop-shadow(0 0 35px rgba(255,160,200,0.8));
+  }
+  
+  .heart[data-active="true"]{
+    transform:scale(1.1); 
+    filter: grayscale(0) brightness(1.3) drop-shadow(0 0 50px rgba(255,120,170,1));
+    animation: heartbeat 1.5s infinite;
+  }
+  
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1.05); }
+    50% { transform: scale(1.12); }
+  }
+  
+  .heart:hover {
+    transform: scale(1.05);
+  }
+
+  /* Signature at the bottom */
+  .signature {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .signature p {
+    font-size: clamp(18px, 3vw, 24px);
+    color: #fff;
+    margin: 10px 0;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  
+  .signature p:first-child {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+  }
+  
+  .signature p:last-child {
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  /* small helpers */
+  .muted{
+    color:rgba(255,255,255,0.7); 
+    font-size:clamp(12px, 1.8vw, 14px);
+  }
+  
+  .row{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content: center;
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: clamp(22px, 4vw, 28px);
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px;
+      margin: 20px auto;
+    }
+    
+    .intro-card {
+      padding: 20px;
+    }
+    
+    .card {
+      padding: 20px;
+    }
+    
+    .letter {
+      padding: 32px 24px 24px;
+    }
+    
+    .star-constellation {
+      height: 240px;
+    }
+    
+    .main-star-constellation {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .small-star {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .flower-container {
+      width: 180px;
+      height: 180px;
+    }
+    
+    .heart {
+      width: 160px;
+      height: 160px;
+    }
+    
+    .signature {
+      padding: 30px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .grid {
+      gap: 16px;
+    }
+    
+    .card {
+      padding: 16px;
+    }
+    
+    .btn, .ghost {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .star-constellation {
+      height: 200px;
+    }
+    
+    .main-star-constellation {
+      width: 70px;
+      height: 70px;
+    }
+    
+    .small-star {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .letter h2 {
+      font-size: 26px;
+    }
+    
+    .letter p {
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="container">
+    <header>
+      <div class="intro-card">
+        <div class="main-star-wrap">
+          <div class="star" id="mainStar" role="button" tabindex="0" aria-pressed="false" title="Нажми, чтобы зажечь звёздочку">
+            <!-- Improved star shape -->
+            <svg width="86" height="86" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2l2.8 6.4L21 9l-4.5 4L18 21l-6-3-6 3 1.5-8L3 9l6.2-0.6L12 2z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="star-label"><strong>Любимая, это всё для тебя 💫❤️</strong></div>
+          <div class="constellation" aria-hidden="true">
+            <!-- heart-shaped constellation SVG -->
+            <svg width="360" height="220" viewBox="0 0 360 220" fill="none" style="opacity:.9">
+              <defs>
+                <radialGradient id="g1" cx="50%" cy="50%">
+                  <stop offset="0%" stop-color="#fff"/>
+                  <stop offset="60%" stop-color="#ffd6ea" stop-opacity="0.7"/>
+                </radialGradient>
+              </defs>
+              <path d="M180 60 C 150 10, 40 20, 80 120 C 110 190, 170 200, 180 210 C 190 200, 250 190, 280 120 C 320 20, 210 10, 180 60 Z" stroke="rgba(255,200,235,0.06)" stroke-width="1.8" fill="none"></path>
+              <!-- little stars laid along heart -->
+              <g id="tinyStars" fill="url(#g1)">
+                <circle cx="140" cy="50" r="3"/>
+                <circle cx="160" cy="40" r="2.6"/>
+                <circle cx="180" cy="32" r="3.2"/>
+                <circle cx="200" cy="38" r="2.4"/>
+                <circle cx="220" cy="48" r="2.8"/>
+                <circle cx="240" cy="68" r="2.4"/>
+                <circle cx="260" cy="92" r="3.2"/>
+                <circle cx="280" cy="120" r="2.6"/>
+                <circle cx="260" cy="150" r="2.8"/>
+                <circle cx="230" cy="175" r="3.2"/>
+                <circle cx="200" cy="195" r="2.6"/>
+                <circle cx="170" cy="190" r="3"/>
+                <circle cx="130" cy="160" r="2.6"/>
+                <circle cx="110" cy="120" r="2.8"/>
+                <circle cx="120" cy="80" r="3.2"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <p class="subtitle">Прокрути вниз — там ты найдёшь маленькие вещи, которые я собрал специально для тебя</p>
+      </div>
+    </header>
+
+    <main class="grid" aria-live="polite">
+      <!-- Письма для тебя -->
+      <section class="card" id="lettersCard" aria-labelledby="lettersTitle">
+        <h3 id="lettersTitle">✉ Письма для тебя, котёнок ❤️</h3>
+        <p class="muted">Нажми на любое письмо, чтобы открыть его</p>
+        <div style="margin-top:20px; display:flex;flex-direction:column; gap:14px">
+          <button class="btn" data-letter="1">Когда тебе тяжело</button>
+          <button class="btn" data-letter="2">Когда ты злишься на себя</button>
+          <button class="btn" data-letter="3">Когда ты не видишь смысла</button>
+          <button class="btn" data-letter="4">Когда тебе нужна любовь</button>
+        </div>
+      </section>
+
+      <!-- Цветок настроения -->
+      <section class="card" id="flowerCard" aria-labelledby="flowerTitle">
+        <h3 id="flowerTitle">🌱 Цветок твоего настроения</h3>
+        <p class="muted">Выбирай состояние — цветок откроется по-новому</p>
+        <div class="flower-wrap">
+          <div class="flower-container">
+            <svg class="flower-svg flower-stage-1" id="flowerSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g transform="translate(100, 100)">
+                <!-- Лепестки цветка -->
+                <g class="flower-petal" id="petal1">
+                  <ellipse rx="20" ry="45" transform="rotate(0) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal2">
+                  <ellipse rx="20" ry="45" transform="rotate(45) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal3">
+                  <ellipse rx="20" ry="45" transform="rotate(90) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal4">
+                  <ellipse rx="20" ry="45" transform="rotate(135) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal5">
+                  <ellipse rx="20" ry="45" transform="rotate(180) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal6">
+                  <ellipse rx="20" ry="45" transform="rotate(225) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal7">
+                  <ellipse rx="20" ry="45" transform="rotate(270) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                <g class="flower-petal" id="petal8">
+                  <ellipse rx="20" ry="45" transform="rotate(315) translate(0,-55)" fill="url(#petalGradient)" />
+                </g>
+                
+                <!-- Центр цветка -->
+                <g class="flower-center">
+                  <circle r="18" fill="url(#centerGradient)" stroke="#ffd6ea" stroke-width="2"/>
+                </g>
+              </g>
+              
+              <!-- Градиенты -->
+              <defs>
+                <linearGradient id="petalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffd6ea" />
+                  <stop offset="50%" stop-color="#ffe7f2" />
+                  <stop offset="100%" stop-color="#fff8fb" />
+                </linearGradient>
+                <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fff1f6" />
+                  <stop offset="100%" stop-color="#ffd6ea" />
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="row">
+            <button class="ghost" data-stage="1">Мне тяжело</button>
+            <button class="ghost" data-stage="2">Становится чуть лучше</button>
+            <button class="ghost" data-stage="3">Появилась искра</button>
+          </div>
+          <div class="muted" id="flowerText" style="margin-top:12px; text-align:center; max-width:380px; line-height:1.6">
+            Даже самым красивым цветочкам бывает тяжело, поэтому ты можешь сейчас побыть со мной. Видимо моему цветочку нужно набраться сил и поэтому я здесь. Мы можем тянуться к свету вместе, но для начала просто побудь со мной собой и отдохни, милая моя ❤️
+          </div>
+        </div>
+      </section>
+
+      <!-- Звёздочка в честь тебя -->
+      <section class="card" id="starCard" aria-labelledby="starTitle">
+        <h3 id="starTitle">⭐ Звёздочка в честь тебя</h3>
+        <p class="muted">Нажми на центральную звёздочку или маленькие звёздочки вокруг</p>
+        
+        <div class="star-constellation">
+          <!-- Центральная звезда - improved shape -->
+          <div class="main-star-constellation" id="mainConstellationStar" title="Нажми на меня">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l2.8 6.4L21 9l-4.5 4L18 21l-6-3-6 3 1.5-8L3 9l6.2-0.6L12 2z" fill="#ffd6ea"/>
+            </svg>
+          </div>
+          
+          <!-- Маленькие звезды вокруг - improved shapes -->
+          <div class="small-star star-pos-1" data-star="1">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-2" data-star="2">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-3" data-star="3">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-4" data-star="4">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-5" data-star="5">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-6" data-star="6">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+          <div class="small-star star-pos-7" data-star="7">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l1.8 4.2L18 6l-2.4 2.8L17 15l-3.6-1.8L10 15l1.4-6.2L6 6l4.2-0.6L12 2z" fill="#ffe7f2"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div style="margin-top:20px; display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <p class="muted" style="text-align:center;">Нажми на любую звезду, чтобы увидеть послание</p>
+        </div>
+      </section>
+
+      <!-- Маленькие тёплые сообщения -->
+      <section class="card" id="microCard" aria-labelledby="microTitle">
+        <h3 id="microTitle">🎁 Маленькие тёплые сообщения</h3>
+        <p class="muted">Нажимай, чтобы получать новое сообщение — их 31</p>
+        <div class="micro" style="margin-top:20px">
+          <div class="box" id="microBox">Ты самая добрая девочка ❤️</div>
+          <div class="row" style="margin-top:20px">
+            <button class="btn" id="nextMicro">Получить сообщение</button>
+            <button class="ghost" id="shuffleMicro">Поменять порядок</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Маленькая игра света -->
+      <section class="card big-heart" id="heartCard" aria-labelledby="heartTitle">
+        <h3 id="heartTitle">💖 Маленькая игра света</h3>
+        <p class="muted">Нажми на сердце — оно станет ярче</p>
+        <div class="heart-container">
+          <!-- Improved heart shape -->
+          <svg class="heart" id="heart" data-level="0" title="Нажми меня" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" 
+                  fill="#ffd6ea" 
+                  stroke="#ffd6ea" 
+                  stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="muted" id="heartInfo" style="text-align:center; max-width:320px; margin-top:10px;">
+          Сердце тусклое — нажми 10 раз, чтобы увидеть сюрприз
+        </div>
+      </section>
+    </main>
+    
+    <!-- Подпись внизу -->
+    <div class="signature">
+      <p>Я люблю тебя, Жаннеля ❤️</p>
+      <p>Ты мой главный подарок в этой жизни ❤️</p>
+    </div>
+  </div>
+
+  <!-- letter modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="letter" role="document">
+      <button class="close" id="closeModal">✕</button>
+      <h2 id="modalTitle">Письмо</h2>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+<script>
+// Data from the user (texts)
+const letters = {
+  1: `Солнышко, тебе не нужно быть сильной со мной. Просто подойди, даже мысленно — я рядом. Даже на расстоянии я всё равно всегда ближе всех к тебе и никогда не оставлю одну в беде 🥺\n\nТы можешь плакать, можешь уставать, можешь молчать и ничего не говорить — я всё равно буду здесь. Я буду обнимать тебя так крепко, как только могу ❤️\n\nИногда всё вокруг кажется тяжёлым… но ты не одна в этом. Мы вместе. Всегда ❤️`,
+  2: `Тебе не нужно быть идеальной (хотя для меня ты идеальна). Мы все люди, не роботы, и можем ошибаться. В этом нет ничего страшного, малыш 🥺\n\nЯ не вижу в тебе ошибок — я вижу прекрасную девушку, которая каждый день становится лучше и не собирается останавливаться ❤️\n\nРазреши себе быть собой. Я люблю тебя именно такой, какая ты есть.\n\nТы настоящая — а настоящая ты самая добрая, прелестная, красивая, трудолюбивая и очень заботливая девочка 🥺❤️`,
+  3: `Сейчас мир может выглядеть так, будто в нём нет места радости. Будто всё поблекло, и краски исчезают прямо на глазах… Но это временно, хорошо?\n\nКраски обязательно вернутся. И если ты пока не можешь в это верить — я поверю за нас двоих.\n\nПросто знай: твоё существование делает этот мир теплее и светлее ❤️\n\nНе нужно улыбаться или делать вид, что тебе лучше. Просто будь здесь, будь собой. Я рядом — всегда — и дам тебе тот покой, который тебе нужен. Это моя цель.\n\nТы для меня важнее всего ❤️`,
+  4: `Солнышко моё, пойдём, я тебя креееепко заобнимаю 🥹\n\nПредставь, что я рядом: ты лежишь на моей груди, а я нежно глажу тебя по голове 🥺\n\nТы моя маленькая, хрупкая кошечка. Позволь мне позаботиться о тебе и затискать тебя так сильно, как ты заслуживаешь 🥰\n\nНе забывай: мы есть друг у друга. Я отправляю тебе сотню тысяч поцелуев издалека… И очень скоро я уже буду рядом, чтобы зацеловать тебя с ног до головы 🥹❤️`
+};
+
+const flowerTexts = {
+  1: `Даже самым красивым цветочкам бывает тяжело, поэтому ты можешь сейчас побыть со мной. Видимо моему цветочку нужно набраться сил и поэтому я здесь. Мы можем тянуться к свету вместе, но для начала просто побудь со мной собой и отдохни, милая моя ❤️`,
+  2: `Малыш, ты такая умничка у меня 🥹❤️\nМаленькие шаги очень важны и я так горжусь тем, что ты двигается вперёд, снова дышит намного легче и у тебя появляется твоя прекрасная искра 🥹\nТы — моя гордость ❤️`,
+  3: `Вот оно — то, к чему мы стремились 🥺\nИскра снова здесь, ты только посмотри на это 🥹\nТеперь, когда мы достигли этого, я буду помогать тебе, будучи рядом, поддерживать эту искру и дать ей возможность продолжать разгораться мягко и спокойно 💋❤️`
+};
+
+const starMainText = `Ты — моя самая любимая звёздочка 🥹❤️`;
+const starMessages = [
+  "Ты делаешь мой мир уютнее ❤️",
+  "Ты — моя нежность ❤️",
+  "С тобой теплее ❤️",
+  "Ты — мой свет даже в темноте ❤️",
+  "Ты самая родная для меня ❤️",
+  "Ты делаешь меня лучше каждый день ❤️",
+  "Ты — моё счастье, Жаннелёк ❤️"
+];
+
+let microMessages = [
+"Ты самая добрая девочка ❤️","У тебя самое красивое сердце ❤️","Ты умеешь любить по-настоящему ❤️","Ты невероятно заботливая ❤️","С тобой так тепло и спокойно ❤️","Ты делаешь мир ярче просто существуя ❤️","Ты очень хрупкая и нежная, и это прекрасно ❤️","Ты самая трудолюбивая малышка ❤️","Ты умеешь поддерживать лучше всех ❤️","Ты самая прекрасная девочка в моей жизни ❤️","Ты умеешь чувствовать глубже, чем другие ❤️","Твоя улыбка — мой любимый свет ❤️","В тебе столько искренности ❤️","Ты вдохновляешь меня каждый день ❤️","Ты очень сильная, даже когда так не кажется ❤️","Ты умеешь любить всей душой ❤️","Твоя нежность — это волшебство ❤️","Ты такая уникальная и настоящая ❤️","Ты наполняешь меня теплом ❤️","Ты — моё самое мягкое чувство ❤️","Ты очень смелая, хоть иногда и сомневаешься ❤️","Твои объятия — мой дом ❤️","Ты такая маленькая и такая важная для меня ❤️","С тобой я становлюсь лучше ❤️","Ты невероятно искренняя ❤️","Ты приносишь свет даже в серые дни ❤️","Ты умеешь делать сердце спокойным ❤️","Ты прекраснее, чем сама думаешь ❤️","Ты особенная, единственная ❤️","Ты — чудо, которое я бережно люблю ❤️","Ты моя самая любимая девочка ❤️"
+];
+
+// modal controls
+const modal = document.getElementById('modal');
+const modalText = document.getElementById('modalText');
+const modalTitle = document.getElementById('modalTitle');
+const closeModal = document.getElementById('closeModal');
+document.querySelectorAll('[data-letter]').forEach(b => {
+  b.addEventListener('click', ()=> openLetter(b.dataset.letter));
+});
+closeModal.addEventListener('click', closeLetter);
+modal.addEventListener('click', (e)=>{ if(e.target===modal) closeLetter(); });
+
+function openLetter(id){
+  modalTitle.textContent = document.querySelector(`[data-letter="${id}"]`).textContent;
+  modalText.textContent = letters[id];
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeLetter(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow = 'auto';
+}
+
+// main star interaction
+const mainStar = document.getElementById('mainStar');
+mainStar.addEventListener('click', ()=> toggleStar());
+mainStar.addEventListener('keydown', (e)=> { if(e.key==='Enter' || e.key===' ') toggleStar(); });
+
+function toggleStar(){
+  const active = mainStar.getAttribute('data-active') === 'true';
+  mainStar.setAttribute('data-active', String(!active));
+  if(!active){
+    showTempMessage(starMainText, 3500);
+  }
+}
+
+// star constellation interaction
+const mainConstellationStar = document.getElementById('mainConstellationStar');
+mainConstellationStar.addEventListener('click', () => {
+  showTempMessage(starMainText, 3500);
+});
+
+document.querySelectorAll('.small-star').forEach((star, index) => {
+  star.addEventListener('click', () => {
+    showTempMessage(starMessages[index], 3000);
+    
+    // Анимация при нажатии
+    star.style.transform = 'scale(1.5)';
+    star.style.filter = 'drop-shadow(0 0 20px rgba(255,214,234,0.9))';
+    setTimeout(() => {
+      star.style.transform = 'scale(1.4)';
+      star.style.filter = 'drop-shadow(0 0 15px rgba(255,214,234,0.7))';
+    }, 200);
+  });
+});
+
+function showTempMessage(text, ms=2500){
+  const prev = document.getElementById('tempMsg');
+  if(prev){ prev.remove(); }
+  const el = document.createElement('div');
+  el.id='tempMsg';
+  el.style.position='fixed';
+  el.style.left='50%';
+  el.style.bottom='120px';
+  el.style.transform='translateX(-50%) translateY(20px)';
+  el.style.padding='18px 28px';
+  el.style.borderRadius='18px';
+  el.style.background='linear-gradient(145deg, rgba(25, 20, 45, 0.95), rgba(20, 15, 35, 0.98))';
+  el.style.boxShadow='0 20px 60px rgba(0,0,0,0.8)';
+  el.style.color='#fff';
+  el.style.zIndex=50;
+  el.style.fontWeight=600;
+  el.style.fontSize='19px';
+  el.style.backdropFilter='blur(15px)';
+  el.style.border='1px solid rgba(255,255,255,0.15)';
+  el.style.textAlign='center';
+  el.style.maxWidth='85%';
+  el.style.opacity='0';
+  el.textContent = text;
+  document.body.appendChild(el);
+  
+  // Анимация появления
+  setTimeout(() => {
+    el.style.opacity = '1';
+    el.style.transform = 'translateX(-50%) translateY(0)';
+    el.style.transition = 'opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+  }, 10);
+  
+  setTimeout(()=> {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(-50%) translateY(-20px)';
+    setTimeout(()=> el.remove(), 300);
+  }, ms - 300);
+}
+
+// flower stages
+const flowerSvg = document.getElementById('flowerSvg');
+const flowerText = document.getElementById('flowerText');
+document.querySelectorAll('[data-stage]').forEach(btn=>{
+  btn.addEventListener('click', ()=> {
+    const s = btn.dataset.stage;
+    flowerSvg.classList.remove('flower-stage-1','flower-stage-2','flower-stage-3');
+    flowerSvg.classList.add('flower-stage-'+s);
+    flowerText.textContent = flowerTexts[s];
+    
+    // Анимация перехода
+    flowerSvg.style.transform = 'scale(1.1) rotate(5deg)';
+    setTimeout(() => {
+      flowerSvg.style.transform = 'scale(1) rotate(0deg)';
+    }, 300);
+  });
+});
+
+// micro messages
+const microBox = document.getElementById('microBox');
+const nextMicro = document.getElementById('nextMicro');
+const shuffleMicro = document.getElementById('shuffleMicro');
+let currentMicroIndex = 0;
+
+function pickMicro(){
+  if(microMessages.length===0){ 
+    microBox.textContent = "Я всегда с тобой ❤️"; 
+    return; 
+  }
+  
+  // Если дошли до конца массива, начинаем сначала
+  if(currentMicroIndex >= microMessages.length) {
+    currentMicroIndex = 0;
+  }
+  
+  const text = microMessages[currentMicroIndex];
+  microBox.textContent = text;
+  
+  // Анимация появления
+  microBox.style.opacity = '0';
+  microBox.style.transform = 'translateY(10px) scale(0.98)';
+  setTimeout(() => {
+    microBox.style.opacity = '1';
+    microBox.style.transform = 'translateY(0) scale(1)';
+    microBox.style.transition = 'opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+  }, 10);
+  
+  currentMicroIndex++;
+}
+nextMicro.addEventListener('click', pickMicro);
+shuffleMicro.addEventListener('click', ()=>{
+  // Перемешиваем массив
+  for (let i = microMessages.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [microMessages[i], microMessages[j]] = [microMessages[j], microMessages[i]];
+  }
+  
+  currentMicroIndex = 0;
+  showTempMessage('Порядок перемешан', 1500);
+});
+
+// heart game
+const heart = document.getElementById('heart');
+const heartInfo = document.getElementById('heartInfo');
+let heartCount = 0;
+heart.addEventListener('click', ()=>{
+  heartCount++;
+  const level = Math.min(3, Math.ceil(heartCount/4)); // 0..3
+  heart.setAttribute('data-level', String(level));
+  
+  if(heartCount>=10){
+    heart.setAttribute('data-active','true');
+    heartInfo.textContent = 'Вот так выглядит моё сердце после появления тебя в моей жизни ☺️💋';
+    showTempMessage('Вот так выглядит моё сердце после появления тебя в моей жизни ☺️💋', 4000);
+  } else {
+    heartInfo.textContent = `Сердце тусклое — нажми ${10-heartCount} раз, чтобы увидеть сюрприз`;
+  }
+  
+  // Анимация пульсации при нажатии
+  heart.style.transform = 'scale(1.15)';
+  setTimeout(() => {
+    heart.style.transform = 'scale(1.1)';
+  }, 150);
+});
+
+// Появление элементов при скролле
+const cards = document.querySelectorAll('.card');
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+cards.forEach(card => {
+  observer.observe(card);
+});
+
+// accessibility: close with Esc
+document.addEventListener('keydown', (e)=>{ 
+  if(e.key==='Escape') closeLetter(); 
+});
+
+// Инициализация при загрузке
+window.addEventListener('load', () => {
+  // Показываем первую карточку сразу
+  if (cards.length > 0) {
+    cards[0].classList.add('visible');
+  }
+  
+  // Инициализируем микросообщения
+  currentMicroIndex = Math.floor(Math.random() * microMessages.length);
+  pickMicro();
+});
+</script>
+</body>
+</html>
